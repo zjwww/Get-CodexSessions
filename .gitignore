@@ -1,0 +1,9 @@
+.codex/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+session_index.jsonl
+rollout-*.jsonl
+.DS_Store
+Thumbs.db
+*.tmp
