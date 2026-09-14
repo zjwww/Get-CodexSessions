@@ -41,7 +41,7 @@ Get-CodexSessions 正是为查询本地 Codex 元数据中的这个信息而编�
 | 平台 | PowerShell |
 |---|---|
 | Windows | Windows PowerShell 5.1 或 PowerShell 7.x |
-| macOS | <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-macos" target="_blank" rel="noopener noreferrer">PowerShell 7.x</a> |
+| macOS | [PowerShell 7.x](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-macos) |
 | Linux | 从代码设计上兼容 PowerShell 7.x，但目前不声明已在 Linux 实机测试 |
 
 默认 Codex Home 在 Windows 上为 `C:\Users\<User>\.codex`，在 macOS 上为 `/Users/<User>/.codex`。脚本使用 `$HOME` 自动处理不同平台的用户目录。

@@ -41,7 +41,7 @@ By default, the script filters internal threads such as `codex-auto-review`, Gua
 | Platform | PowerShell |
 |---|---|
 | Windows | Windows PowerShell 5.1 or PowerShell 7.x |
-| macOS | <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-macos" target="_blank" rel="noopener noreferrer">PowerShell 7.x</a> |
+| macOS | [PowerShell 7.x](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-macos) |
 | Linux | PowerShell 7.x; compatible by design, but not currently claimed as tested on Linux |
 
 The default Codex Home is `C:\Users\<User>\.codex` on Windows and `/Users/<User>/.codex` on macOS. The script uses `$HOME` to handle the platform-specific user directory.
