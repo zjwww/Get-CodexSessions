@@ -26,6 +26,8 @@ Get-CodexSessions 正是为查询本地 Codex 元数据中的这个信息而编�
 
 脚本默认过滤 `codex-auto-review`、Guardian、Sub-agent、child thread，以及内部 review / approval thread 等 Codex 内部线程。需要检查这些线程时可使用 `-IncludeInternal`。
 
+扫描 rollout 文件时，脚本会通过 PowerShell 标准 `Write-Progress` 命令显示宿主原生的整体进度。Windows PowerShell 5.1 和 PowerShell 7.x 会分别使用各自的默认显示样式。自动化或其他非交互场景可使用 `-NoProgress` 关闭进度显示。
+
 ## 输出示例
 
 ### Windows

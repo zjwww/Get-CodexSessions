@@ -34,11 +34,12 @@ sessions/.../rollout-*.jsonl
 |---|---|---|---|
 | `-IncludeInternal` | Switch | 关闭 | 同时显示 `codex-auto-review`、Guardian、Sub-agent、child thread 等内部线程 |
 | `-CodexHome` | String | `$HOME/.codex` | 手工指定 Codex 数据目录 |
+| `-NoProgress` | Switch | 关闭 | 扫描 rollout 文件时关闭宿主原生进度显示 |
 
 通用形式：
 
 ```powershell
-./Get-CodexSessions.ps1 [-IncludeInternal] [-CodexHome <路径>]
+./Get-CodexSessions.ps1 [-IncludeInternal] [-CodexHome <路径>] [-NoProgress]
 ```
 
 Windows 常用：
@@ -75,7 +76,20 @@ macOS：
 - 排除 `codex-auto-review`
 - 排除 Guardian / Sub-agent
 - 排除 child thread
+- 扫描 rollout 文件时显示宿主原生的整体进度
 - 按 `LastActive` 从新到旧排序
+
+### 进度显示
+
+脚本只调用 PowerShell 标准 `Write-Progress` 命令，不强制指定显示样式。因此，Windows PowerShell 5.1 使用默认 Classic 样式，PowerShell 7.x 使用自身已配置或默认的样式，通常为 Minimal。
+
+进度百分比根据已处理的 rollout 文件数量计算。由于不同 rollout 文件的大小可能不同，它表示总体文件数量进度，并不是精确的剩余时间估计。
+
+自动化或其他非交互场景可关闭进度显示：
+
+```powershell
+.\Get-CodexSessions.ps1 -NoProgress
+```
 
 ---
 

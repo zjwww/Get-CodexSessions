@@ -34,11 +34,12 @@ The script does not modify Codex sessions, JSONL files, SQLite databases, or Cod
 |---|---|---|---|
 | `-IncludeInternal` | Switch | Off | Also show internal Codex threads such as `codex-auto-review`, Guardian, Sub-agent, and child threads |
 | `-CodexHome` | String | `$HOME/.codex` | Manually specify the Codex data directory |
+| `-NoProgress` | Switch | Off | Suppress the host-native progress display while rollout files are scanned |
 
 General syntax:
 
 ```powershell
-./Get-CodexSessions.ps1 [-IncludeInternal] [-CodexHome <path>]
+./Get-CodexSessions.ps1 [-IncludeInternal] [-CodexHome <path>] [-NoProgress]
 ```
 
 Typical Windows form:
@@ -75,7 +76,20 @@ By default, the script:
 - Filters out `codex-auto-review`
 - Filters out Guardian / Sub-agent threads
 - Filters out child threads
+- Shows host-native overall progress while rollout files are scanned
 - Sorts by `LastActive`, newest first
+
+### Progress display
+
+The script uses the standard PowerShell `Write-Progress` command without forcing a presentation style. Windows PowerShell 5.1 therefore uses its default Classic presentation, while PowerShell 7.x uses its configured/default presentation, normally Minimal.
+
+The progress percentage is based on the number of rollout files processed. Because rollout files can have different sizes, it is an overall file-count indicator rather than an exact estimate of remaining time.
+
+Suppress progress output for automation or other non-interactive use:
+
+```powershell
+.\Get-CodexSessions.ps1 -NoProgress
+```
 
 ---
 

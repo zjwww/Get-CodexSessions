@@ -26,6 +26,8 @@ This makes it easier to determine whether a session changed models or reasoning 
 
 By default, the script filters internal threads such as `codex-auto-review`, Guardian, Sub-agent, child threads, and internal review or approval threads. Use `-IncludeInternal` when those threads are relevant to your inspection.
 
+While rollout files are being scanned, the script displays host-native overall progress using the standard PowerShell `Write-Progress` command. Windows PowerShell 5.1 and PowerShell 7.x use their own default presentation styles. Use `-NoProgress` to suppress progress output in automation or other non-interactive scenarios.
+
 ## Output examples
 
 ### Windows

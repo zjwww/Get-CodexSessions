@@ -15,7 +15,12 @@ param(
     #
     #   ./Get-CodexSessions.ps1 -CodexHome "/Users/me/.codex"
     #
-    [string]$CodexHome
+    [string]$CodexHome,
+
+    # Optional:
+    # Suppress host-native progress display.
+    #
+    [switch]$NoProgress
 )
 
 # ======================================================================
@@ -46,9 +51,11 @@ param(
 #   - hides codex-auto-review sessions
 #   - hides guardian/subagent sessions
 #   - hides child/internal sessions
+#   - shows host-native progress while scanning rollout files
 #   - sorts sessions by LastActive, newest first
 #
 # Use -IncludeInternal to include Codex internal sessions.
+# Use -NoProgress to suppress the progress display.
 # ======================================================================
 
 
@@ -505,13 +512,48 @@ WHERE title IS NOT NULL
 # ======================================================================
 
 
-$Results = foreach (
-    $rolloutFile in Get-ChildItem `
+$RolloutFiles = @(
+    Get-ChildItem `
         -LiteralPath $SessionsPath `
         -Recurse `
         -File `
         -Filter "rollout-*.jsonl"
-) {
+)
+
+
+$TotalRolloutFiles  = $RolloutFiles.Count
+$CurrentRolloutFile = 0
+$ProgressActivity   = "Scanning Codex sessions"
+
+
+$Results = foreach ($rolloutFile in $RolloutFiles) {
+
+    $CurrentRolloutFile++
+
+
+    if (
+        -not $NoProgress -and
+        $TotalRolloutFiles -gt 0
+    ) {
+
+        $PercentComplete =
+            [int][Math]::Floor(
+                (
+                    $CurrentRolloutFile /
+                    [double]$TotalRolloutFiles
+                ) * 100
+            )
+
+
+        Write-Progress `
+            -Activity $ProgressActivity `
+            -Status (
+                "Reading rollout file {0} of {1}" -f
+                $CurrentRolloutFile,
+                $TotalRolloutFiles
+            ) `
+            -PercentComplete $PercentComplete
+    }
 
     $filePath = $rolloutFile.FullName
 
@@ -1267,6 +1309,13 @@ $Results = foreach (
         JsonlPath =
             $filePath
     }
+}
+
+if (-not $NoProgress) {
+
+    Write-Progress `
+        -Activity $ProgressActivity `
+        -Completed
 }
 
 
