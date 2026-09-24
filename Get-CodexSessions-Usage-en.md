@@ -128,11 +128,11 @@ For title filtering, use the full `Title` field rather than the truncated `Displ
 
 ## 5. Filter sessions by title keyword
 
-Example: show titles containing `VidzDown`.
+Example: show titles containing `SampleProject`.
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown*" } |
+    Where-Object { $_.Title -like "*SampleProject*" } |
     Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
 ```
 
@@ -151,7 +151,7 @@ at the beginning instead.
 ```powershell
 .\Get-CodexSessions.ps1 |
     Where-Object {
-        $_.Title -like "*VidzDown*" -or
+        $_.Title -like "*SampleProject*" -or
         $_.Title -like "*CopyMoveToMenu*"
     } |
     Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
@@ -174,7 +174,7 @@ at the beginning instead.
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown2*" } |
+    Where-Object { $_.Title -like "*SampleProjectArchive*" } |
     Format-List *
 ```
 
@@ -433,7 +433,7 @@ Exporting creates a new CSV file but does not modify the original Codex data.
 ```powershell
 .\Get-CodexSessions.ps1 |
     Where-Object {
-        $_.Title -like "*VidzDown2*"
+        $_.Title -like "*SampleProjectArchive*"
     } |
     Select-Object Title, JsonlPath
 ```
@@ -443,7 +443,7 @@ Return only the path string:
 ```powershell
 .\Get-CodexSessions.ps1 |
     Where-Object {
-        $_.Title -like "*VidzDown2*"
+        $_.Title -like "*SampleProjectArchive*"
     } |
     Select-Object -ExpandProperty JsonlPath
 ```
@@ -457,7 +457,7 @@ Return only the path string:
 ```powershell
 $session = .\Get-CodexSessions.ps1 |
     Where-Object {
-        $_.Title -like "*VidzDown2*"
+        $_.Title -like "*SampleProjectArchive*"
     } |
     Select-Object -First 1
 
@@ -469,7 +469,7 @@ explorer.exe (Split-Path $session.JsonlPath)
 ```powershell
 $session = ./Get-CodexSessions.ps1 |
     Where-Object {
-        $_.Title -like "*VidzDown2*"
+        $_.Title -like "*SampleProjectArchive*"
     } |
     Select-Object -First 1
 
@@ -504,7 +504,7 @@ The script already handles the platform-specific default Codex Home and path dif
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown*" } |
+    Where-Object { $_.Title -like "*SampleProject*" } |
     Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
 ```
 
@@ -512,7 +512,7 @@ The script already handles the platform-specific default Codex Home and path dif
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown*" } |
+    Where-Object { $_.Title -like "*SampleProject*" } |
     Format-List *
 ```
 

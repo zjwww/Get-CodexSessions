@@ -128,11 +128,11 @@ macOS：
 
 ## 5. 按标题关键字过滤
 
-例如只看标题包含 `VidzDown` 的会话：
+例如只看标题包含 `SampleProject` 的会话：
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown*" } |
+    Where-Object { $_.Title -like "*SampleProject*" } |
     Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
 ```
 
@@ -149,7 +149,7 @@ macOS 把开头改为：
 ```powershell
 .\Get-CodexSessions.ps1 |
     Where-Object {
-        $_.Title -like "*VidzDown*" -or
+        $_.Title -like "*SampleProject*" -or
         $_.Title -like "*CopyMoveToMenu*"
     } |
     Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
@@ -172,7 +172,7 @@ macOS 把开头改为：
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown2*" } |
+    Where-Object { $_.Title -like "*SampleProjectArchive*" } |
     Format-List *
 ```
 
@@ -431,7 +431,7 @@ JsonlPath
 ```powershell
 .\Get-CodexSessions.ps1 |
     Where-Object {
-        $_.Title -like "*VidzDown2*"
+        $_.Title -like "*SampleProjectArchive*"
     } |
     Select-Object Title, JsonlPath
 ```
@@ -441,7 +441,7 @@ JsonlPath
 ```powershell
 .\Get-CodexSessions.ps1 |
     Where-Object {
-        $_.Title -like "*VidzDown2*"
+        $_.Title -like "*SampleProjectArchive*"
     } |
     Select-Object -ExpandProperty JsonlPath
 ```
@@ -455,7 +455,7 @@ JsonlPath
 ```powershell
 $session = .\Get-CodexSessions.ps1 |
     Where-Object {
-        $_.Title -like "*VidzDown2*"
+        $_.Title -like "*SampleProjectArchive*"
     } |
     Select-Object -First 1
 
@@ -467,7 +467,7 @@ explorer.exe (Split-Path $session.JsonlPath)
 ```powershell
 $session = ./Get-CodexSessions.ps1 |
     Where-Object {
-        $_.Title -like "*VidzDown2*"
+        $_.Title -like "*SampleProjectArchive*"
     } |
     Select-Object -First 1
 
@@ -502,7 +502,7 @@ open (Split-Path $session.JsonlPath)
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown*" } |
+    Where-Object { $_.Title -like "*SampleProject*" } |
     Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
 ```
 
@@ -510,7 +510,7 @@ open (Split-Path $session.JsonlPath)
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown*" } |
+    Where-Object { $_.Title -like "*SampleProject*" } |
     Format-List *
 ```
 

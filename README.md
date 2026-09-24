@@ -1,8 +1,17 @@
-English | [简体中文](README.zh-CN.md)
-
-# Get-CodexSessions
-
-A cross-platform PowerShell utility for inspecting local Codex sessions and identifying the model originally used by each session.
+<div align="center">
+  <img src="assets/powershell-logo.svg" alt="PowerShell logo" width="96">
+  <h1>Get-CodexSessions</h1>
+  <p>A cross-platform PowerShell utility for inspecting local Codex sessions and identifying the model originally used by each session.</p>
+  <p>
+    <a href="https://github.com/zjwww/Get-CodexSessions/releases/latest"><img alt="Latest GitHub Release" src="https://img.shields.io/github/v/release/zjwww/Get-CodexSessions?sort=semver&amp;style=flat&amp;label=version"></a>
+    <img alt="Platforms: Windows and macOS" src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS-0078D4?style=flat">
+    <img alt="PowerShell 5.1 and 7.x" src="https://img.shields.io/badge/PowerShell-5.1%20%7C%207.x-5391FE?style=flat&amp;logo=powershell&amp;logoColor=white">
+    <a href="LICENSE"><img alt="License: GPL-3.0-only" src="https://img.shields.io/badge/license-GPL--3.0--only-blue?style=flat"></a>
+  </p>
+  <p>
+    <strong>English</strong>｜<a href="README.zh-CN.md">简体中文</a>｜<a href="https://github.com/zjwww/Get-CodexSessions/releases/latest">Download Latest</a>｜<a href="https://github.com/zjwww/Get-CodexSessions/issues">Report an Issue</a>
+  </p>
+</div>
 
 ## Why this tool exists
 
@@ -50,7 +59,7 @@ The default Codex Home is `C:\Users\<User>\.codex` on Windows and `/Users/<User>
 
 ## Tested environments
 
-- Windows: validated during the v1.0 release with Windows PowerShell 5.1 and PowerShell 7.x.
+- Windows: validated with Windows PowerShell 5.1 and the Codex-bundled PowerShell 7.6.5 runtime. This confirms PowerShell 7 engine compatibility; it is not evidence of a separate system-wide PowerShell 7 installation.
 - macOS: tested on macOS Tahoe 26.2 with PowerShell 7.x. This confirms the script works in that tested environment, but does not guarantee compatibility with every macOS version.
 
 ## Installation
@@ -81,7 +90,7 @@ macOS:
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown*" } |
+    Where-Object { $_.Title -like "*SampleProject*" } |
     Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
 ```
 
@@ -89,7 +98,7 @@ macOS:
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown*" } |
+    Where-Object { $_.Title -like "*SampleProject*" } |
     Format-List *
 ```
 

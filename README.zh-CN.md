@@ -1,8 +1,17 @@
-[English](README.md) | 简体中文
-
-# Get-CodexSessions
-
-一个跨平台 PowerShell 工具，用于检查本地 Codex 会话，并确认每个会话最初实际使用的模型。
+<div align="center">
+  <img src="assets/powershell-logo.svg" alt="PowerShell Logo" width="96">
+  <h1>Get-CodexSessions</h1>
+  <p>一个跨平台 PowerShell 工具，用于检查本地 Codex 会话，并确认每个会话最初实际使用的模型。</p>
+  <p>
+    <a href="https://github.com/zjwww/Get-CodexSessions/releases/latest"><img alt="最新 GitHub Release" src="https://img.shields.io/github/v/release/zjwww/Get-CodexSessions?sort=semver&amp;style=flat&amp;label=version"></a>
+    <img alt="支持平台：Windows 和 macOS" src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS-0078D4?style=flat">
+    <img alt="PowerShell 5.1 和 7.x" src="https://img.shields.io/badge/PowerShell-5.1%20%7C%207.x-5391FE?style=flat&amp;logo=powershell&amp;logoColor=white">
+    <a href="LICENSE"><img alt="许可证：GPL-3.0-only" src="https://img.shields.io/badge/license-GPL--3.0--only-blue?style=flat"></a>
+  </p>
+  <p>
+    <a href="README.md">English</a>｜<strong>简体中文</strong>｜<a href="https://github.com/zjwww/Get-CodexSessions/releases/latest">下载最新版</a>｜<a href="https://github.com/zjwww/Get-CodexSessions/issues">问题反馈</a>
+  </p>
+</div>
 
 ## 为什么做这个工具
 
@@ -50,7 +59,7 @@ Get-CodexSessions 正是为查询本地 Codex 元数据中的这个信息而编�
 
 ## 已测试环境
 
-- Windows：在 v1.0 发布过程中使用 Windows PowerShell 5.1 和 PowerShell 7.x 完成验证。
+- Windows：已使用 Windows PowerShell 5.1 和 Codex 内置的 PowerShell 7.6.5 运行时完成验证。这可以确认 PowerShell 7 引擎兼容性，但不代表本机另行安装了系统级 PowerShell 7。
 - macOS：已在 macOS Tahoe 26.2 + PowerShell 7.x 环境中实际测试通过。该测试结果仅代表这一已验证环境，不代表所有 macOS 版本都保证完全兼容。
 
 ## 安装
@@ -81,7 +90,7 @@ macOS：
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown*" } |
+    Where-Object { $_.Title -like "*SampleProject*" } |
     Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
 ```
 
@@ -89,7 +98,7 @@ macOS：
 
 ```powershell
 .\Get-CodexSessions.ps1 |
-    Where-Object { $_.Title -like "*VidzDown*" } |
+    Where-Object { $_.Title -like "*SampleProject*" } |
     Format-List *
 ```
 
