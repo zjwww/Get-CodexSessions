@@ -1,1 +1,3 @@
 Get-CodexSessions.ps1 -text
+Get-CodexSessions-v*.ps1 -text
+SHA256SUMS.txt -text
