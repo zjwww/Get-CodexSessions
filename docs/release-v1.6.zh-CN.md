@@ -19,14 +19,30 @@
 
 Windows（PowerShell 5.1 或 7.x）：
 
+对象表格：
+
 ```powershell
-.\Get-CodexSessions-v1.6.ps1
+.\Get-CodexSessions-v1.6.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project, ProjectId, ProjectPath -AutoSize
+```
+
+彩色表格（独立会话行显示为黄色）：
+
+```powershell
+.\Get-CodexSessions-v1.6.ps1 -ColorOutput -Property DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project, ProjectId, ProjectPath -StandaloneColor Yellow
 ```
 
 macOS（PowerShell 7.x）：
 
+对象表格：
+
 ```powershell
-./Get-CodexSessions-v1.6.ps1
+./Get-CodexSessions-v1.6.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project, ProjectId, ProjectPath -AutoSize
+```
+
+彩色表格（独立会话行显示为黄色）：
+
+```powershell
+./Get-CodexSessions-v1.6.ps1 -ColorOutput -Property DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project, ProjectId, ProjectPath -StandaloneColor Yellow
 ```
 
 [完整中文使用说明](../Get-CodexSessions-Usage-zh-CN.md)

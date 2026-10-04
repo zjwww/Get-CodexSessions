@@ -19,14 +19,30 @@ Statically reviewed for macOS PowerShell 7 compatibility; native macOS runtime r
 
 Windows (PowerShell 5.1 or 7.x):
 
+Object table:
+
 ```powershell
-.\Get-CodexSessions-v1.6.ps1
+.\Get-CodexSessions-v1.6.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project, ProjectId, ProjectPath -AutoSize
+```
+
+Colored table (standalone rows in yellow):
+
+```powershell
+.\Get-CodexSessions-v1.6.ps1 -ColorOutput -Property DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project, ProjectId, ProjectPath -StandaloneColor Yellow
 ```
 
 macOS (PowerShell 7.x):
 
+Object table:
+
 ```powershell
-./Get-CodexSessions-v1.6.ps1
+./Get-CodexSessions-v1.6.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project, ProjectId, ProjectPath -AutoSize
+```
+
+Colored table (standalone rows in yellow):
+
+```powershell
+./Get-CodexSessions-v1.6.ps1 -ColorOutput -Property DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project, ProjectId, ProjectPath -StandaloneColor Yellow
 ```
 
 [Full usage guide in English](../Get-CodexSessions-Usage-en.md)
