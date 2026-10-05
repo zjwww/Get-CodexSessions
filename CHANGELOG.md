@@ -2,6 +2,42 @@
 
 This document records published releases and subsequent local development versions of Get-CodexSessions. Dates for local iterations follow the recorded UTC calendar date. A version marked **Local development** has not been published as a GitHub Release.
 
+## [v1.7] - 2026-10-05
+
+**Status:** [Published GitHub Release](https://github.com/zjwww/Get-CodexSessions/releases/tag/v1.7); current script: [`Get-CodexSessions-v1.7.ps1`](Get-CodexSessions-v1.7.ps1)
+
+### Added
+
+- Added `FirstServiceTier` and `LastServiceTier` from the first and last usable `thread_settings_applied` events. These fields preserve raw values such as `priority` and `default`.
+- Added `FirstSpeedMode` and `LastSpeedMode` as user-facing mappings: `priority` or `fast` becomes `Fast`, `default` becomes `Standard`, and missing or unrecognized tiers become `Unknown`; `ultrafast` and `flex` are also represented without discarding their raw values.
+- Added `LastSpeedMode` to the default `-ColorOutput` columns and the recommended bilingual table commands. All four fields remain available in structured-object output and as selectable colored-output columns.
+- Added bilingual examples for filtering sessions whose last recorded speed mode is `Fast`.
+
+### Behavior notes
+
+- "Last" means the final usable speed setting recorded in that session's rollout. The script does not substitute the current global configuration for missing historical data.
+- Fast is intentionally not labeled as `1.5x`, because the exact speed multiplier is model-dependent.
+- The compiled large-store pre-scanner now retains `thread_settings_applied` events while continuing to skip unrelated large records. The standard PowerShell reader remains the automatic fallback when compilation is unavailable.
+
+### Validation
+
+The following local development validation was recorded before the formal release:
+
+- Parsed successfully with Windows PowerShell 5.1.26100.9444 and PowerShell 7.6.5.
+- Both engines executed against the current local session store and returned 56 normal sessions with the same result counts: 9 `Fast`, 42 `Standard`, 5 `Unknown`, no unexpected speed labels, and no reported parse-error rows.
+- Controlled fixtures passed on both engines for first/last transitions, `priority`, `fast`, `default`, `ultrafast`, `flex`, missing tiers, optional JSON whitespace, and all four output fields.
+- A fixture larger than 32 MiB passed through the compiled scanner on both engines; the same fixture passed through the standard reader with `Add-Type` deliberately unavailable. Input hashes remained unchanged.
+- After excluding the four new fields, the complete PowerShell 7 structured output matched v1.6 exactly. The default colored table included `LastSpeedMode`, and an explicit colored table accepted all four new properties.
+- Statically reviewed for macOS PowerShell 7 compatibility; native macOS runtime remains unverified. The v1.7 changes use portable string handling, regular expressions, JSON parsing, and existing cross-platform .NET file APIs, with no new platform-specific command, path assumption, console dependency, external executable, or API.
+
+### Formal release review — 2026-10-05
+
+- Independent synthetic regression passed on Windows PowerShell 5.1.26100.9444 and the Codex-bundled PowerShell 7.6.5 runtime: 267 checks per engine covering speed transitions, raw values, missing/unknown tiers, JSON whitespace/escapes, v1.6 parity for existing fields, object/color output, progress, compiled large-store scanning, and the Add-Type-unavailable fallback.
+- Both engines parsed 210 documentation code blocks and executed all bilingual Release examples. The repeated Project column in the object-table commands is retained exactly as requested. Success, missing data directories, and invalid display parameters returned exit codes 0, 1, and 2 respectively.
+- Synthetic input file hashes and all existing versioned script bytes remained unchanged; private session data and test outputs were excluded from publication.
+- Static review covered new/changed code for $HOME and paths, optional sqlite3 and read-only fallback, portable .NET/Add-Type APIs, Write-Host/Write-Progress, object pipelines, UTF-8, CRLF, and supported PowerShell syntax. No new platform-specific dependency was found.
+- Statically reviewed for macOS PowerShell 7 compatibility; native macOS runtime remains unverified. Historical native macOS evidence belongs to v1.0 only.
+
 ## [v1.6] - 2026-10-04
 
 **Status:** [Published GitHub Release](https://github.com/zjwww/Get-CodexSessions/releases/tag/v1.6); current script: [`Get-CodexSessions-v1.6.ps1`](Get-CodexSessions-v1.6.ps1)

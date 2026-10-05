@@ -2,6 +2,42 @@
 
 本文档记录 Get-CodexSessions 已发布版本及其后的本地开发版本。本地迭代日期采用记录中的 UTC 日历日期。标记为**本地开发版**的版本尚未发布为 GitHub Release。
 
+## [v1.7] - 2026-10-05
+
+**状态：** [正式 GitHub Release](https://github.com/zjwww/Get-CodexSessions/releases/tag/v1.7)；当前脚本：[`Get-CodexSessions-v1.7.ps1`](Get-CodexSessions-v1.7.ps1)
+
+### 新增
+
+- 从最初及最后一个可用的 `thread_settings_applied` 事件新增 `FirstServiceTier` 和 `LastServiceTier`，保留 `priority`、`default` 等原始值。
+- 新增用户易读字段 `FirstSpeedMode` 和 `LastSpeedMode`：`priority` 或 `fast` 映射为 `Fast`，`default` 映射为 `Standard`，缺失或无法识别的 tier 映射为 `Unknown`；同时支持显示 `ultrafast` 和 `flex`，且不丢弃原始值。
+- `-ColorOutput` 默认列及双语推荐表格命令新增 `LastSpeedMode`。四个字段均保留在结构化对象中，也都可以作为彩色输出的可选列。
+- 双语 Usage Guide 新增筛选“最后记录速度模式为 `Fast`”的多行和单行示例。
+
+### 行为说明
+
+- “最后”表示该会话 rollout 中最后一个可用的速度设置；历史数据缺失时，脚本不会用当前全局配置代替。
+- Fast 不统一标记为 `1.5x`，因为准确速度倍率取决于模型。
+- 大型数据编译预扫描器现在会保留 `thread_settings_applied` 事件，同时继续跳过无关的大型记录；无法编译时仍自动回退到标准 PowerShell 读取器。
+
+### 验证
+
+以下为正式发布前保留的本地开发验证记录：
+
+- 已通过 Windows PowerShell 5.1.26100.9444 和 PowerShell 7.6.5 语法解析。
+- 两种引擎均在当前本机会话库中完成实际执行，均返回 56 个普通会话：9 个 `Fast`、42 个 `Standard`、5 个 `Unknown`，没有意外速度标签，也没有报告解析错误的会话行。
+- 两种引擎均通过受控夹具，覆盖 first/last 切换、`priority`、`fast`、`default`、`ultrafast`、`flex`、缺失 tier、可选 JSON 空白及全部四个输出字段。
+- 大于 32 MiB 的夹具在两种引擎中均通过编译预扫描器；主动禁用 `Add-Type` 后，同一夹具也通过标准读取器，且输入文件哈希保持不变。
+- 排除四个新增字段后，PowerShell 7 完整结构化输出与 v1.6 完全一致。彩色默认表格包含 `LastSpeedMode`，显式彩色表格也能选择全部四个新增字段。
+- 已静态复核 macOS PowerShell 7 兼容性；尚未进行 macOS 实机运行验证。v1.7 新增代码只使用跨平台字符串处理、正则表达式、JSON 解析及原有跨平台 .NET 文件 API，没有引入新的平台专属命令、路径假设、控制台依赖、外部可执行程序或 API。
+
+### 正式发布复核 — 2026-10-05
+
+- Windows PowerShell 5.1.26100.9444 和 Codex 内置 PowerShell 7.6.5 均通过独立合成数据回归：每种引擎 267 项检查，覆盖速度切换、原始值、缺失/未知值、JSON 空白与转义、旧字段与 v1.6 一致性、对象/彩色输出、进度和大型编译扫描及禁用 Add-Type 的回退。
+- 两种引擎均通过 210 个文档代码块的语法检查及全部双语 Release 命令执行；按用户原文保留对象表格中重复的 Project 列。成功、缺失数据目录和显示参数失败的退出码分别为 0、1、2。
+- 合成输入文件及所有既有版本化脚本的字节均保持不变；没有提交私人会话数据或测试输出。
+- 静态复核覆盖新增/变更代码的 $HOME 和路径、可选 sqlite3 及只读回退、跨平台 .NET/Add-Type、Write-Host/Write-Progress、对象管道、UTF-8、CRLF 和支持的 PowerShell 语法，未发现新增平台专属依赖。
+- 已静态复核 macOS PowerShell 7 兼容性；尚未进行 macOS 实机运行验证。历史 macOS 实测仅属于 v1.0。
+
 ## [v1.6] - 2026-10-04
 
 **状态：** [正式 GitHub Release](https://github.com/zjwww/Get-CodexSessions/releases/tag/v1.6)；当前脚本：[`Get-CodexSessions-v1.6.ps1`](Get-CodexSessions-v1.6.ps1)

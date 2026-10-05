@@ -1,6 +1,6 @@
-# Get-CodexSessions-v1.6.ps1 Usage Guide (Windows / macOS)
+# Get-CodexSessions-v1.7.ps1 Usage Guide (Windows / macOS)
 
-v1.6 was statically reviewed for macOS PowerShell 7 compatibility; native macOS runtime remains unverified. The historical macOS runtime test for v1.0 does not verify this version.
+v1.7 was statically reviewed for macOS PowerShell 7 compatibility; native macOS runtime remains unverified. The historical macOS runtime test for v1.0 does not verify this version.
 
 Longer commands below provide a **Multiline** form and an equivalent **Single line** form. A simple invocation containing only the script name is identical in both forms. Square and angle brackets in the parameter synopsis are notation and must not be run literally.
 
@@ -41,25 +41,25 @@ The script does not modify Codex sessions, JSONL files, SQLite databases, or Cod
 | `-CodexHome` | String | `$HOME/.codex` | Manually specify the Codex data directory |
 | `-NoProgress` | Switch | Off | Suppress the host-native progress display while rollout files are scanned |
 | `-ColorOutput` | Switch | Off | Render a display-only terminal table and color standalone-session rows |
-| `-Property` | String array | Ten commonly used fields | Select and order columns in `-ColorOutput` mode; aliases: `-Properties`, `-Columns` |
+| `-Property` | String array | Eleven commonly used fields, including `LastSpeedMode` | Select and order columns in `-ColorOutput` mode; aliases: `-Properties`, `-Columns` |
 | `-StandaloneColor` | `ConsoleColor` | `Yellow` | Select the standalone-row foreground color in `-ColorOutput` mode |
 
 General syntax:
 
 ```text
-./Get-CodexSessions-v1.6.ps1 [-IncludeInternal] [-CodexHome <path>] [-NoProgress] [-ColorOutput] [-Property <name[]>] [-StandaloneColor <color>]
+./Get-CodexSessions-v1.7.ps1 [-IncludeInternal] [-CodexHome <path>] [-NoProgress] [-ColorOutput] [-Property <name[]>] [-StandaloneColor <color>]
 ```
 
 Typical Windows form:
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1
+.\Get-CodexSessions-v1.7.ps1
 ```
 
 Typical macOS form:
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1
+./Get-CodexSessions-v1.7.ps1
 ```
 
 ---
@@ -69,13 +69,13 @@ Typical macOS form:
 Run directly:
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1
+.\Get-CodexSessions-v1.7.ps1
 ```
 
 On macOS:
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1
+./Get-CodexSessions-v1.7.ps1
 ```
 
 By default, the script:
@@ -100,14 +100,14 @@ Suppress progress output for automation or other non-interactive use:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 `
+.\Get-CodexSessions-v1.7.ps1 `
     -NoProgress
 ```
 
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -NoProgress
+.\Get-CodexSessions-v1.7.ps1 -NoProgress
 ```
 
 ### Colored terminal view
@@ -117,15 +117,15 @@ Highlight complete standalone-session rows and select the displayed columns:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 `
+.\Get-CodexSessions-v1.7.ps1 `
     -ColorOutput `
-    -Property DisplayTitle, LastActive, Project, ProjectId, ProjectPath
+    -Property DisplayTitle, LastActive, LastSpeedMode, Project, ProjectId, ProjectPath
 ```
 
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -ColorOutput -Property DisplayTitle, LastActive, Project, ProjectId, ProjectPath
+.\Get-CodexSessions-v1.7.ps1 -ColorOutput -Property DisplayTitle, LastActive, LastSpeedMode, Project, ProjectId, ProjectPath
 ```
 
 Choose another foreground color:
@@ -133,7 +133,7 @@ Choose another foreground color:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 `
+.\Get-CodexSessions-v1.7.ps1 `
     -ColorOutput `
     -Property DisplayTitle, Project, ProjectPath `
     -StandaloneColor Magenta
@@ -142,7 +142,7 @@ Choose another foreground color:
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -ColorOutput -Property DisplayTitle, Project, ProjectPath -StandaloneColor Magenta
+.\Get-CodexSessions-v1.7.ps1 -ColorOutput -Property DisplayTitle, Project, ProjectPath -StandaloneColor Magenta
 ```
 
 `-ColorOutput` writes a terminal table through the current PowerShell host and does not emit session objects. Do not append `Format-Table`, `Where-Object`, `Sort-Object`, or export commands to that display-only invocation. Omit `-ColorOutput` whenever an object pipeline is required.
@@ -156,14 +156,14 @@ Choose another foreground color:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 |
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ### macOS
@@ -171,14 +171,14 @@ Choose another foreground color:
 **Multiline**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+./Get-CodexSessions-v1.7.ps1 |
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **Single line**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+./Get-CodexSessions-v1.7.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 Main fields:
@@ -194,6 +194,10 @@ Main fields:
 | `LastEffort` | Most recent Reasoning Effort; ends with ` *` when it differs from `FirstEffort` |
 | `LastModelRaw` | Most recently used model without the change marker |
 | `LastEffortRaw` | Most recent Reasoning Effort without the change marker |
+| `FirstServiceTier` | First raw recorded service tier, such as `priority` or `default` |
+| `LastServiceTier` | Last raw recorded service tier |
+| `FirstSpeedMode` | Friendly form of the first tier: `Fast`, `Standard`, `Ultrafast`, `Flex`, or `Unknown` |
+| `LastSpeedMode` | Friendly form of the last recorded tier; included in the recommended table |
 | `Project` | Saved Codex project name, or `<Standalone Session>` when no formal assignment exists |
 | `ProjectId` | Saved Codex project ID, or `<N/A>` for a standalone session |
 | `ProjectPath` | Saved project root path, or the complete recorded `CWD` for a standalone session |
@@ -201,6 +205,24 @@ Main fields:
 | `CWD` | Working directory recorded for the session |
 
 For title filtering, use the full `Title` field rather than the truncated `DisplayTitle` field.
+
+The speed-mode fields come from recorded `thread_settings_applied` events. `priority` and `fast` map to `Fast`, while `default` maps to `Standard`. Missing or unrecognized tiers map to `Unknown`; the raw service-tier fields preserve any recognized or future stored string. The script does not infer a missing historical value from the current global configuration, and it does not label Fast as `1.5x` because the exact multiplier is model-dependent.
+
+Show only sessions whose last recorded speed mode is Fast:
+
+**Multiline**
+
+```powershell
+.\Get-CodexSessions-v1.7.ps1 |
+    Where-Object { $_.LastSpeedMode -eq "Fast" } |
+    Format-Table DisplayTitle, LastActive, LastModel, LastSpeedMode, Project -AutoSize
+```
+
+**Single line**
+
+```powershell
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.LastSpeedMode -eq "Fast" } | Format-Table DisplayTitle, LastActive, LastModel, LastSpeedMode, Project -AutoSize
+```
 
 ---
 
@@ -211,21 +233,21 @@ Example: show titles containing `SampleProject`.
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object { $_.Title -like "*SampleProject*" } |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 On macOS, use:
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1
+./Get-CodexSessions-v1.7.ps1
 ```
 
 at the beginning instead.
@@ -237,18 +259,18 @@ at the beginning instead.
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProject*" -or
         $_.Title -like "*SampleProjectArchive*"
     } |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProject*" -or $_.Title -like "*SampleProjectArchive*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProject*" -or $_.Title -like "*SampleProjectArchive*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ### Require multiple keywords
@@ -256,18 +278,18 @@ at the beginning instead.
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProjectArchive*" -and
         $_.Title -like "*Release*"
     } |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" -and $_.Title -like "*Release*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" -and $_.Title -like "*Release*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ---
@@ -277,7 +299,7 @@ at the beginning instead.
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object { $_.Title -like "*SampleProjectArchive*" } |
     Format-List *
 ```
@@ -285,7 +307,7 @@ at the beginning instead.
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Format-List *
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Format-List *
 ```
 
 Possible fields include:
@@ -303,6 +325,10 @@ LastModel
 LastEffort
 LastModelRaw
 LastEffortRaw
+FirstServiceTier
+LastServiceTier
+FirstSpeedMode
+LastSpeedMode
 Project
 ProjectId
 ProjectPath
@@ -324,7 +350,7 @@ JsonlPath
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.SessionId -eq "01234567-89ab-cdef-0123-456789abcdef"
     } |
@@ -334,7 +360,7 @@ JsonlPath
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.SessionId -eq "01234567-89ab-cdef-0123-456789abcdef" } | Format-List *
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.SessionId -eq "01234567-89ab-cdef-0123-456789abcdef" } | Format-List *
 ```
 
 ---
@@ -346,7 +372,7 @@ JsonlPath
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Project -eq "SampleProject"
     } |
@@ -356,7 +382,7 @@ JsonlPath
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Project -eq "SampleProject" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Project -eq "SampleProject" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort -AutoSize
 ```
 
 Match an exact saved Project ID instead:
@@ -364,7 +390,7 @@ Match an exact saved Project ID instead:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.ProjectId -eq "01234567-89ab-cdef-0123-456789abcdef"
     } |
@@ -374,7 +400,7 @@ Match an exact saved Project ID instead:
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.ProjectId -eq "01234567-89ab-cdef-0123-456789abcdef" } | Format-Table DisplayTitle, LastActive, Project, ProjectPath -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.ProjectId -eq "01234567-89ab-cdef-0123-456789abcdef" } | Format-Table DisplayTitle, LastActive, Project, ProjectPath -AutoSize
 ```
 
 Match the full CWD instead:
@@ -382,7 +408,7 @@ Match the full CWD instead:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.CWD -like "*SampleProject*"
     } |
@@ -392,7 +418,7 @@ Match the full CWD instead:
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.CWD -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, CWD, FirstModel, LastModel -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.CWD -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, CWD, FirstModel, LastModel -AutoSize
 ```
 
 ---
@@ -404,7 +430,7 @@ Latest 10 sessions:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Select-Object -First 10 |
     Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
@@ -412,7 +438,7 @@ Latest 10 sessions:
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Select-Object -First 10 | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Select-Object -First 10 | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 Because the script already sorts by `LastActive` descending, these are the 10 most recently used normal sessions.
@@ -426,7 +452,7 @@ Because the script already sorts by `LastActive` descending, these are the 10 mo
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Sort-Object LastActive -Descending |
     Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
@@ -434,7 +460,7 @@ Because the script already sorts by `LastActive` descending, these are the 10 mo
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Sort-Object LastActive -Descending | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Sort-Object LastActive -Descending | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 ### Last activity: oldest → newest
@@ -442,7 +468,7 @@ Because the script already sorts by `LastActive` descending, these are the 10 mo
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Sort-Object LastActive |
     Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
@@ -450,7 +476,7 @@ Because the script already sorts by `LastActive` descending, these are the 10 mo
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Sort-Object LastActive | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Sort-Object LastActive | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 ### Creation time: newest → oldest
@@ -458,7 +484,7 @@ Because the script already sorts by `LastActive` descending, these are the 10 mo
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Sort-Object Created -Descending |
     Format-Table DisplayTitle, Created, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
@@ -466,7 +492,7 @@ Because the script already sorts by `LastActive` descending, these are the 10 mo
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Sort-Object Created -Descending | Format-Table DisplayTitle, Created, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Sort-Object Created -Descending | Format-Table DisplayTitle, Created, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 ---
@@ -476,7 +502,7 @@ Because the script already sorts by `LastActive` descending, these are the 10 mo
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.FirstModel -ne $_.LastModelRaw
     } |
@@ -486,7 +512,7 @@ Because the script already sorts by `LastActive` descending, these are the 10 mo
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.FirstModel -ne $_.LastModelRaw } | Format-Table DisplayTitle, LastActive, FirstModel, LastModel, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.FirstModel -ne $_.LastModelRaw } | Format-Table DisplayTitle, LastActive, FirstModel, LastModel, Project -AutoSize
 ```
 
 ---
@@ -496,7 +522,7 @@ Because the script already sorts by `LastActive` descending, these are the 10 mo
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.FirstEffort -ne $_.LastEffortRaw
     } |
@@ -506,7 +532,7 @@ Because the script already sorts by `LastActive` descending, these are the 10 mo
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.FirstEffort -ne $_.LastEffortRaw } | Format-Table DisplayTitle, LastActive, FirstEffort, LastEffort, FirstModel, LastModel -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.FirstEffort -ne $_.LastEffortRaw } | Format-Table DisplayTitle, LastActive, FirstEffort, LastEffort, FirstModel, LastModel -AutoSize
 ```
 
 ---
@@ -518,7 +544,7 @@ Example: sessions that started with `gpt-5.6-sol`.
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.FirstModel -eq "gpt-5.6-sol"
     } |
@@ -528,7 +554,7 @@ Example: sessions that started with `gpt-5.6-sol`.
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.FirstModel -eq "gpt-5.6-sol" } | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.FirstModel -eq "gpt-5.6-sol" } | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 Example: sessions that started with `gpt-6-astra`.
@@ -536,7 +562,7 @@ Example: sessions that started with `gpt-6-astra`.
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.FirstModel -eq "gpt-6-astra"
     } |
@@ -546,7 +572,7 @@ Example: sessions that started with `gpt-6-astra`.
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.FirstModel -eq "gpt-6-astra" } | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.FirstModel -eq "gpt-6-astra" } | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 ---
@@ -558,14 +584,14 @@ Show all sessions:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 `
+.\Get-CodexSessions-v1.7.ps1 `
     -IncludeInternal
 ```
 
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal
 ```
 
 Show internal sessions only:
@@ -573,7 +599,7 @@ Show internal sessions only:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal |
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal |
     Where-Object { $_.IsInternal } |
     Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
 ```
@@ -581,7 +607,7 @@ Show internal sessions only:
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal | Where-Object { $_.IsInternal } | Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal | Where-Object { $_.IsInternal } | Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
 ```
 
 Show full details for a `codex-auto-review` thread:
@@ -589,7 +615,7 @@ Show full details for a `codex-auto-review` thread:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal |
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal |
     Where-Object {
         $_.FirstModel -eq "codex-auto-review"
     } |
@@ -600,7 +626,7 @@ Show full details for a `codex-auto-review` thread:
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal | Where-Object { $_.FirstModel -eq "codex-auto-review" } | Select-Object -First 1 | Format-List *
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal | Where-Object { $_.FirstModel -eq "codex-auto-review" } | Select-Object -First 1 | Format-List *
 ```
 
 ---
@@ -612,14 +638,14 @@ Show full details for a `codex-auto-review` thread:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 `
+.\Get-CodexSessions-v1.7.ps1 `
     -CodexHome "D:\CodexData\.codex"
 ```
 
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -CodexHome "D:\CodexData\.codex"
+.\Get-CodexSessions-v1.7.ps1 -CodexHome "D:\CodexData\.codex"
 ```
 
 ### macOS
@@ -627,14 +653,14 @@ Show full details for a `codex-auto-review` thread:
 **Multiline**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 `
+./Get-CodexSessions-v1.7.ps1 `
     -CodexHome "/Users/yourname/CodexData/.codex"
 ```
 
 **Single line**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 -CodexHome "/Users/yourname/CodexData/.codex"
+./Get-CodexSessions-v1.7.ps1 -CodexHome "/Users/yourname/CodexData/.codex"
 ```
 
 Combine with `-IncludeInternal`:
@@ -642,7 +668,7 @@ Combine with `-IncludeInternal`:
 **Multiline**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 `
+./Get-CodexSessions-v1.7.ps1 `
     -CodexHome "/Users/yourname/.codex" `
     -IncludeInternal
 ```
@@ -650,7 +676,7 @@ Combine with `-IncludeInternal`:
 **Single line**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 -CodexHome "/Users/yourname/.codex" -IncludeInternal
+./Get-CodexSessions-v1.7.ps1 -CodexHome "/Users/yourname/.codex" -IncludeInternal
 ```
 
 ---
@@ -662,7 +688,7 @@ Combine with `-IncludeInternal`:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Export-Csv `
         -Path ".\CodexSessions.csv" `
         -NoTypeInformation `
@@ -672,7 +698,7 @@ Combine with `-IncludeInternal`:
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Export-Csv -Path ".\CodexSessions.csv" -NoTypeInformation -Encoding UTF8
+.\Get-CodexSessions-v1.7.ps1 | Export-Csv -Path ".\CodexSessions.csv" -NoTypeInformation -Encoding UTF8
 ```
 
 ### macOS
@@ -680,7 +706,7 @@ Combine with `-IncludeInternal`:
 **Multiline**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 |
+./Get-CodexSessions-v1.7.ps1 |
     Export-Csv `
         -Path "./CodexSessions.csv" `
         -NoTypeInformation `
@@ -690,7 +716,7 @@ Combine with `-IncludeInternal`:
 **Single line**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 | Export-Csv -Path "./CodexSessions.csv" -NoTypeInformation -Encoding UTF8
+./Get-CodexSessions-v1.7.ps1 | Export-Csv -Path "./CodexSessions.csv" -NoTypeInformation -Encoding UTF8
 ```
 
 Export selected fields only:
@@ -698,7 +724,7 @@ Export selected fields only:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Select-Object `
         Title,
         LastActive,
@@ -719,7 +745,7 @@ Export selected fields only:
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Select-Object Title, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project, SessionId, JsonlPath | Export-Csv ".\CodexSessions.csv" -NoTypeInformation -Encoding UTF8
+.\Get-CodexSessions-v1.7.ps1 | Select-Object Title, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project, SessionId, JsonlPath | Export-Csv ".\CodexSessions.csv" -NoTypeInformation -Encoding UTF8
 ```
 
 Exporting creates a new CSV file but does not modify the original Codex data.
@@ -731,7 +757,7 @@ Exporting creates a new CSV file but does not modify the original Codex data.
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProjectArchive*"
     } |
@@ -741,7 +767,7 @@ Exporting creates a new CSV file but does not modify the original Codex data.
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object Title, JsonlPath
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object Title, JsonlPath
 ```
 
 Return only the path string:
@@ -749,7 +775,7 @@ Return only the path string:
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProjectArchive*"
     } |
@@ -759,7 +785,7 @@ Return only the path string:
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -ExpandProperty JsonlPath
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -ExpandProperty JsonlPath
 ```
 
 ---
@@ -771,7 +797,7 @@ Return only the path string:
 **Multiline**
 
 ```powershell
-$session = .\Get-CodexSessions-v1.6.ps1 |
+$session = .\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProjectArchive*"
     } |
@@ -783,7 +809,7 @@ explorer.exe (Split-Path $session.JsonlPath)
 **Single line**
 
 ```powershell
-$session = .\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -First 1; explorer.exe (Split-Path $session.JsonlPath)
+$session = .\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -First 1; explorer.exe (Split-Path $session.JsonlPath)
 ```
 
 ### macOS
@@ -791,7 +817,7 @@ $session = .\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*Sample
 **Multiline**
 
 ```powershell
-$session = ./Get-CodexSessions-v1.6.ps1 |
+$session = ./Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProjectArchive*"
     } |
@@ -803,7 +829,7 @@ open (Split-Path $session.JsonlPath)
 **Single line**
 
 ```powershell
-$session = ./Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -First 1; open (Split-Path $session.JsonlPath)
+$session = ./Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -First 1; open (Split-Path $session.JsonlPath)
 ```
 
 ---
@@ -812,7 +838,7 @@ $session = ./Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*Sample
 
 | Windows | macOS |
 |---|---|
-| `.\Get-CodexSessions-v1.6.ps1` | `./Get-CodexSessions-v1.6.ps1` |
+| `.\Get-CodexSessions-v1.7.ps1` | `./Get-CodexSessions-v1.7.ps1` |
 | `$HOME` → `C:\Users\User` | `$HOME` → `/Users/User` |
 | `sqlite3.exe` / `sqlite3` | `sqlite3` |
 | `explorer.exe` | `open` |
@@ -828,14 +854,14 @@ The script already handles the platform-specific default Codex Home and path dif
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 |
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ### Search by title
@@ -843,15 +869,15 @@ The script already handles the platform-specific default Codex Home and path dif
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object { $_.Title -like "*SampleProject*" } |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ### Show all details for a matching session
@@ -859,7 +885,7 @@ The script already handles the platform-specific default Codex Home and path dif
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object { $_.Title -like "*SampleProject*" } |
     Format-List *
 ```
@@ -867,7 +893,7 @@ The script already handles the platform-specific default Codex Home and path dif
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-List *
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-List *
 ```
 
 ### Inspect Codex internal threads
@@ -875,7 +901,7 @@ The script already handles the platform-specific default Codex Home and path dif
 **Multiline**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal |
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal |
     Where-Object { $_.IsInternal } |
     Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
 ```
@@ -883,7 +909,7 @@ The script already handles the platform-specific default Codex Home and path dif
 **Single line**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal | Where-Object { $_.IsInternal } | Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal | Where-Object { $_.IsInternal } | Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
 ```
 
 On macOS, replace the initial `.\` with `./`. All other PowerShell pipeline and filtering syntax stays the same.

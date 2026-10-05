@@ -29,6 +29,7 @@ Get-CodexSessions 正是为查询本地 Codex 元数据中的这个信息而编�
 - `FirstModel` 和 `FirstEffort`
 - `LastModel` 和 `LastEffort`；与对应的初始值不同时在末尾添加 ` *`
 - 用于精确筛选和导出的无标记原始值 `LastModelRaw` 和 `LastEffortRaw`
+- 通过 `FirstSpeedMode`、`LastSpeedMode`、`FirstServiceTier` 和 `LastServiceTier` 显示最初及最后记录的速度状态
 - Project 名称、Project ID、项目根路径和工作目录（`CWD`）
 - 对应的 rollout JSONL 路径
 - 可选的终端独立会话整行着色，并可由调用者选择列和前景色
@@ -39,6 +40,8 @@ Get-CodexSessions 正是为查询本地 Codex 元数据中的这个信息而编�
 
 会话最后使用的模型与初始模型不同时，`LastModel` 末尾会显示 ` *`；Reasoning Effort 发生变化时，`LastEffort` 使用相同标记。需要精确筛选或导出无标记值时，请使用 `LastModelRaw` 和 `LastEffortRaw`。
 
+`FirstSpeedMode` 和 `LastSpeedMode` 会把记录的 service tier 转换为 `Fast`、`Standard`、`Ultrafast`、`Flex` 或 `Unknown`；对应的 `FirstServiceTier` 和 `LastServiceTier` 保留 `priority`、`default` 等原始存储值。这里的“最后”表示 rollout 文件中最后一次记录的设置；脚本不会用当前全局配置反推缺失的历史值。由于准确倍率取决于模型，Fast 不统一标为 `1.5x`。
+
 脚本默认过滤 `codex-auto-review`、Guardian、Sub-agent、child thread，以及内部 review / approval thread 等 Codex 内部线程。需要检查这些线程时可使用 `-IncludeInternal`。
 
 扫描 rollout 文件时，脚本会通过 PowerShell 标准 `Write-Progress` 命令显示宿主原生的整体进度。Windows PowerShell 5.1 和 PowerShell 7.x 会分别使用各自的默认显示样式。自动化或其他非交互场景可使用 `-NoProgress` 关闭进度显示。
@@ -47,7 +50,7 @@ Get-CodexSessions 正是为查询本地 Codex 元数据中的这个信息而编�
 
 ## 输出示例
 
-以下图片来自历史版本，展示终端输出样式；不代表 v1.6 的新增字段或 macOS 实机验证。
+以下图片来自历史版本，展示终端输出样式；不代表 v1.7 的新增字段或 macOS 实机验证。
 
 ### Windows
 
@@ -70,11 +73,11 @@ Get-CodexSessions 正是为查询本地 Codex 元数据中的这个信息而编�
 ## 已测试环境
 
 - Windows：已使用 Windows PowerShell 5.1 和 Codex 内置的 PowerShell 7.6.5 运行时完成验证。这可以确认 PowerShell 7 引擎兼容性，但不代表本机另行安装了系统级 PowerShell 7。
-- macOS：v1.6 已静态复核 macOS PowerShell 7 兼容性；尚未进行 macOS 实机运行验证。macOS Tahoe 26.2 + PowerShell 7.x 的历史实测证据仅属于 v1.0。
+- macOS：v1.7 已静态复核 macOS PowerShell 7 兼容性；尚未进行 macOS 实机运行验证。macOS Tahoe 26.2 + PowerShell 7.x 的历史实测证据仅属于 v1.0。
 
 ## 安装
 
-本项目不需要传统安装。下载 [Get-CodexSessions-v1.6.ps1](Get-CodexSessions-v1.6.ps1)，放到任意目录，然后使用受支持的 PowerShell 版本运行即可。
+本项目不需要传统安装。下载 [Get-CodexSessions-v1.7.ps1](Get-CodexSessions-v1.7.ps1)，放到任意目录，然后使用受支持的 PowerShell 版本运行即可。
 
 Windows 的执行策略设置可能影响从网络下载的 `.ps1` 文件。请遵循所在组织的安全策略；本项目不要求降低系统级执行策略。
 
@@ -85,15 +88,15 @@ Windows 的执行策略设置可能影响从网络下载的 `.ps1` 文件。请�
 Windows：
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 |
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 macOS：
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+./Get-CodexSessions-v1.7.ps1 |
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ### 在终端中突出显示独立会话
@@ -101,9 +104,9 @@ macOS：
 `-ColorOutput` 是可选的纯显示模式。独立会话行默认显示为黄色，`-Property` 用于选择并排列需要显示的列：
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 `
+.\Get-CodexSessions-v1.7.ps1 `
     -ColorOutput `
-    -Property DisplayTitle, LastActive, Project, ProjectId, ProjectPath
+    -Property DisplayTitle, LastActive, LastSpeedMode, Project, ProjectId, ProjectPath
 ```
 
 可以通过 `-StandaloneColor` 和 `ConsoleColor` 颜色名称选择其他前景色。默认对象模式保持不变，仍可用于 `Format-Table`、筛选、排序和导出管道。
@@ -111,15 +114,15 @@ macOS：
 ### 按标题关键字查找
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object { $_.Title -like "*SampleProject*" } |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ### 查看一个会话的完整信息
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object { $_.Title -like "*SampleProject*" } |
     Format-List *
 ```
@@ -127,7 +130,7 @@ macOS：
 ### 查看 Codex 内部线程
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal |
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal |
     Where-Object { $_.IsInternal } |
     Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
 ```
@@ -150,7 +153,7 @@ Get-CodexSessions 会读取以下本地 Codex 数据：
 - `~/.codex/session_index.jsonl`：用于会话标题和部分线程元数据
 - `~/.codex/.codex-global-state.json`：如可用，用于保存的项目定义和会话到项目的归属关系
 - `~/.codex/state_5.sqlite`：系统存在 `sqlite3` 时，作为可选的会话标题和正式项目归属补充来源
-- `~/.codex/sessions/.../rollout-*.jsonl`：用于实际 `turn_context`、模型、Reasoning Effort、时间、工作目录及相关元数据
+- `~/.codex/sessions/.../rollout-*.jsonl`：用于实际 `turn_context`、模型、Reasoning Effort、`service_tier` 等已应用线程设置、时间、工作目录及相关元数据
 
 SQLite 会以明确的只读方式打开。如果系统没有 `sqlite3`，或可选的数据库查询失败，脚本仍会继续处理 session index 和 rollout 文件。
 
@@ -167,7 +170,7 @@ Get-CodexSessions 是只读检查工具。它不会修改、删除、重命名�
 - Windows PowerShell 5.1
 - Windows 上的 PowerShell 7.x
 - macOS 上的 PowerShell 7.x
-- 从代码设计上兼容 Linux 上的 PowerShell 7.x；v1.6 不声明 Linux 为已完成实机测试的环境
+- 从代码设计上兼容 Linux 上的 PowerShell 7.x；v1.7 不声明 Linux 为已完成实机测试的环境
 
 ## 许可证
 

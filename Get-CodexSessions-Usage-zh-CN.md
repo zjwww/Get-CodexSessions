@@ -1,6 +1,6 @@
-# Get-CodexSessions-v1.6.ps1 使用说明（Windows / macOS）
+# Get-CodexSessions-v1.7.ps1 使用说明（Windows / macOS）
 
-v1.6 已静态复核 macOS PowerShell 7 兼容性；尚未进行 macOS 实机运行验证。v1.0 的 macOS 历史实测不能作为本版本的实测证明。
+v1.7 已静态复核 macOS PowerShell 7 兼容性；尚未进行 macOS 实机运行验证。v1.0 的 macOS 历史实测不能作为本版本的实测证明。
 
 以下较长命令同时提供**多行写法**和等价的**单行写法**。只有脚本名、不带参数的简单调用在两种写法中相同。参数总览中的方括号和尖括号仅为语法说明，不能原样执行。
 
@@ -41,25 +41,25 @@ sessions/.../rollout-*.jsonl
 | `-CodexHome` | String | `$HOME/.codex` | 手工指定 Codex 数据目录 |
 | `-NoProgress` | Switch | 关闭 | 扫描 rollout 文件时关闭宿主原生进度显示 |
 | `-ColorOutput` | Switch | 关闭 | 渲染纯显示终端表格，并给独立会话整行着色 |
-| `-Property` | 字符串数组 | 十个常用字段 | 选择并排列 `-ColorOutput` 模式中的列；别名：`-Properties`、`-Columns` |
+| `-Property` | 字符串数组 | 十一个常用字段，包含 `LastSpeedMode` | 选择并排列 `-ColorOutput` 模式中的列；别名：`-Properties`、`-Columns` |
 | `-StandaloneColor` | `ConsoleColor` | `Yellow` | 选择 `-ColorOutput` 模式中独立会话行的前景色 |
 
 通用形式：
 
 ```text
-./Get-CodexSessions-v1.6.ps1 [-IncludeInternal] [-CodexHome <路径>] [-NoProgress] [-ColorOutput] [-Property <名称[]>] [-StandaloneColor <颜色>]
+./Get-CodexSessions-v1.7.ps1 [-IncludeInternal] [-CodexHome <路径>] [-NoProgress] [-ColorOutput] [-Property <名称[]>] [-StandaloneColor <颜色>]
 ```
 
 Windows 常用：
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1
+.\Get-CodexSessions-v1.7.ps1
 ```
 
 macOS 常用：
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1
+./Get-CodexSessions-v1.7.ps1
 ```
 
 ---
@@ -69,13 +69,13 @@ macOS 常用：
 直接运行：
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1
+.\Get-CodexSessions-v1.7.ps1
 ```
 
 macOS：
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1
+./Get-CodexSessions-v1.7.ps1
 ```
 
 默认会：
@@ -100,14 +100,14 @@ macOS：
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 `
+.\Get-CodexSessions-v1.7.ps1 `
     -NoProgress
 ```
 
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -NoProgress
+.\Get-CodexSessions-v1.7.ps1 -NoProgress
 ```
 
 ### 彩色终端视图
@@ -117,15 +117,15 @@ macOS：
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 `
+.\Get-CodexSessions-v1.7.ps1 `
     -ColorOutput `
-    -Property DisplayTitle, LastActive, Project, ProjectId, ProjectPath
+    -Property DisplayTitle, LastActive, LastSpeedMode, Project, ProjectId, ProjectPath
 ```
 
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -ColorOutput -Property DisplayTitle, LastActive, Project, ProjectId, ProjectPath
+.\Get-CodexSessions-v1.7.ps1 -ColorOutput -Property DisplayTitle, LastActive, LastSpeedMode, Project, ProjectId, ProjectPath
 ```
 
 选择其他前景色：
@@ -133,7 +133,7 @@ macOS：
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 `
+.\Get-CodexSessions-v1.7.ps1 `
     -ColorOutput `
     -Property DisplayTitle, Project, ProjectPath `
     -StandaloneColor Magenta
@@ -142,7 +142,7 @@ macOS：
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -ColorOutput -Property DisplayTitle, Project, ProjectPath -StandaloneColor Magenta
+.\Get-CodexSessions-v1.7.ps1 -ColorOutput -Property DisplayTitle, Project, ProjectPath -StandaloneColor Magenta
 ```
 
 `-ColorOutput` 通过当前 PowerShell 宿主写出终端表格，不再输出会话对象。不要在这条纯显示命令后继续连接 `Format-Table`、`Where-Object`、`Sort-Object` 或导出命令；需要对象管道时不要使用 `-ColorOutput`。
@@ -156,14 +156,14 @@ macOS：
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 |
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ### macOS
@@ -171,14 +171,14 @@ macOS：
 **多行写法**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+./Get-CodexSessions-v1.7.ps1 |
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **单行写法**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+./Get-CodexSessions-v1.7.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 主要字段：
@@ -194,6 +194,10 @@ macOS：
 | `LastEffort` | 最近一次 Reasoning Effort；与 `FirstEffort` 不同时在末尾添加 ` *` |
 | `LastModelRaw` | 不带变化标记的最近模型原始值 |
 | `LastEffortRaw` | 不带变化标记的最近 Reasoning Effort 原始值 |
+| `FirstServiceTier` | 最初记录的 service tier 原始值，例如 `priority` 或 `default` |
+| `LastServiceTier` | 最后记录的 service tier 原始值 |
+| `FirstSpeedMode` | 最初 tier 的易读形式：`Fast`、`Standard`、`Ultrafast`、`Flex` 或 `Unknown` |
+| `LastSpeedMode` | 最后记录 tier 的易读形式；默认推荐表格包含此列 |
 | `Project` | 保存的 Codex 项目名称；没有正式归属时为 `<Standalone Session>` |
 | `ProjectId` | 保存的 Codex Project ID；独立会话为 `<N/A>` |
 | `ProjectPath` | 保存的项目根路径；独立会话为其记录的完整 `CWD` |
@@ -201,6 +205,24 @@ macOS：
 | `CWD` | 会话记录的工作目录 |
 
 筛选标题时建议使用完整的 `Title`，不要使用可能被截断的 `DisplayTitle`。
+
+速度模式字段来自已记录的 `thread_settings_applied` 事件：`priority` 和 `fast` 映射为 `Fast`，`default` 映射为 `Standard`。缺失或无法识别的 tier 映射为 `Unknown`；原始 service-tier 字段会保留已识别或未来新增的存储字符串。脚本不会用当前全局配置反推缺失的历史值，也不会把 Fast 统一标为 `1.5x`，因为准确倍率取决于模型。
+
+只查看最后记录为 Fast 的会话：
+
+**多行写法**
+
+```powershell
+.\Get-CodexSessions-v1.7.ps1 |
+    Where-Object { $_.LastSpeedMode -eq "Fast" } |
+    Format-Table DisplayTitle, LastActive, LastModel, LastSpeedMode, Project -AutoSize
+```
+
+**单行写法**
+
+```powershell
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.LastSpeedMode -eq "Fast" } | Format-Table DisplayTitle, LastActive, LastModel, LastSpeedMode, Project -AutoSize
+```
 
 ---
 
@@ -211,21 +233,21 @@ macOS：
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object { $_.Title -like "*SampleProject*" } |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 macOS 把开头改为：
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1
+./Get-CodexSessions-v1.7.ps1
 ```
 
 `-like` 默认不区分英文大小写。
@@ -235,18 +257,18 @@ macOS 把开头改为：
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProject*" -or
         $_.Title -like "*SampleProjectArchive*"
     } |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProject*" -or $_.Title -like "*SampleProjectArchive*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProject*" -or $_.Title -like "*SampleProjectArchive*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ### 同时包含多个关键字
@@ -254,18 +276,18 @@ macOS 把开头改为：
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProjectArchive*" -and
         $_.Title -like "*Release*"
     } |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" -and $_.Title -like "*Release*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" -and $_.Title -like "*Release*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ---
@@ -275,7 +297,7 @@ macOS 把开头改为：
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object { $_.Title -like "*SampleProjectArchive*" } |
     Format-List *
 ```
@@ -283,7 +305,7 @@ macOS 把开头改为：
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Format-List *
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Format-List *
 ```
 
 可查看：
@@ -301,6 +323,10 @@ LastModel
 LastEffort
 LastModelRaw
 LastEffortRaw
+FirstServiceTier
+LastServiceTier
+FirstSpeedMode
+LastSpeedMode
 Project
 ProjectId
 ProjectPath
@@ -322,7 +348,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.SessionId -eq "01234567-89ab-cdef-0123-456789abcdef"
     } |
@@ -332,7 +358,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.SessionId -eq "01234567-89ab-cdef-0123-456789abcdef" } | Format-List *
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.SessionId -eq "01234567-89ab-cdef-0123-456789abcdef" } | Format-List *
 ```
 
 ---
@@ -344,7 +370,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Project -eq "SampleProject"
     } |
@@ -354,7 +380,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Project -eq "SampleProject" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Project -eq "SampleProject" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort -AutoSize
 ```
 
 也可以按保存的 Project ID 精确匹配：
@@ -362,7 +388,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.ProjectId -eq "01234567-89ab-cdef-0123-456789abcdef"
     } |
@@ -372,7 +398,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.ProjectId -eq "01234567-89ab-cdef-0123-456789abcdef" } | Format-Table DisplayTitle, LastActive, Project, ProjectPath -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.ProjectId -eq "01234567-89ab-cdef-0123-456789abcdef" } | Format-Table DisplayTitle, LastActive, Project, ProjectPath -AutoSize
 ```
 
 按完整 CWD 模糊匹配：
@@ -380,7 +406,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.CWD -like "*SampleProject*"
     } |
@@ -390,7 +416,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.CWD -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, CWD, FirstModel, LastModel -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.CWD -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, CWD, FirstModel, LastModel -AutoSize
 ```
 
 ---
@@ -402,7 +428,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Select-Object -First 10 |
     Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
@@ -410,7 +436,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Select-Object -First 10 | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Select-Object -First 10 | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 由于脚本默认已按 `LastActive` 降序排序，因此这里就是最近使用的 10 个正常会话。
@@ -424,7 +450,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Sort-Object LastActive -Descending |
     Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
@@ -432,7 +458,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Sort-Object LastActive -Descending | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Sort-Object LastActive -Descending | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 ### 按最后活动时间：旧 → 新
@@ -440,7 +466,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Sort-Object LastActive |
     Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
@@ -448,7 +474,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Sort-Object LastActive | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Sort-Object LastActive | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 ### 按创建时间：新 → 旧
@@ -456,7 +482,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Sort-Object Created -Descending |
     Format-Table DisplayTitle, Created, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
@@ -464,7 +490,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Sort-Object Created -Descending | Format-Table DisplayTitle, Created, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Sort-Object Created -Descending | Format-Table DisplayTitle, Created, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 ---
@@ -474,7 +500,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.FirstModel -ne $_.LastModelRaw
     } |
@@ -484,7 +510,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.FirstModel -ne $_.LastModelRaw } | Format-Table DisplayTitle, LastActive, FirstModel, LastModel, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.FirstModel -ne $_.LastModelRaw } | Format-Table DisplayTitle, LastActive, FirstModel, LastModel, Project -AutoSize
 ```
 
 ---
@@ -494,7 +520,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.FirstEffort -ne $_.LastEffortRaw
     } |
@@ -504,7 +530,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.FirstEffort -ne $_.LastEffortRaw } | Format-Table DisplayTitle, LastActive, FirstEffort, LastEffort, FirstModel, LastModel -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.FirstEffort -ne $_.LastEffortRaw } | Format-Table DisplayTitle, LastActive, FirstEffort, LastEffort, FirstModel, LastModel -AutoSize
 ```
 
 ---
@@ -516,7 +542,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.FirstModel -eq "gpt-5.6-sol"
     } |
@@ -526,7 +552,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.FirstModel -eq "gpt-5.6-sol" } | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.FirstModel -eq "gpt-5.6-sol" } | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 例如 `gpt-6-astra`：
@@ -534,7 +560,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.FirstModel -eq "gpt-6-astra"
     } |
@@ -544,7 +570,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.FirstModel -eq "gpt-6-astra" } | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.FirstModel -eq "gpt-6-astra" } | Format-Table DisplayTitle, LastActive, FirstModel, FirstEffort, Project -AutoSize
 ```
 
 ---
@@ -556,14 +582,14 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 `
+.\Get-CodexSessions-v1.7.ps1 `
     -IncludeInternal
 ```
 
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal
 ```
 
 只显示内部线程：
@@ -571,7 +597,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal |
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal |
     Where-Object { $_.IsInternal } |
     Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
 ```
@@ -579,7 +605,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal | Where-Object { $_.IsInternal } | Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal | Where-Object { $_.IsInternal } | Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
 ```
 
 查看某个 `codex-auto-review` 内部会话的完整信息：
@@ -587,7 +613,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal |
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal |
     Where-Object {
         $_.FirstModel -eq "codex-auto-review"
     } |
@@ -598,7 +624,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal | Where-Object { $_.FirstModel -eq "codex-auto-review" } | Select-Object -First 1 | Format-List *
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal | Where-Object { $_.FirstModel -eq "codex-auto-review" } | Select-Object -First 1 | Format-List *
 ```
 
 ---
@@ -610,14 +636,14 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 `
+.\Get-CodexSessions-v1.7.ps1 `
     -CodexHome "D:\CodexData\.codex"
 ```
 
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -CodexHome "D:\CodexData\.codex"
+.\Get-CodexSessions-v1.7.ps1 -CodexHome "D:\CodexData\.codex"
 ```
 
 ### macOS
@@ -625,14 +651,14 @@ JsonlPath
 **多行写法**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 `
+./Get-CodexSessions-v1.7.ps1 `
     -CodexHome "/Users/yourname/CodexData/.codex"
 ```
 
 **单行写法**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 -CodexHome "/Users/yourname/CodexData/.codex"
+./Get-CodexSessions-v1.7.ps1 -CodexHome "/Users/yourname/CodexData/.codex"
 ```
 
 和 `-IncludeInternal` 组合：
@@ -640,7 +666,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 `
+./Get-CodexSessions-v1.7.ps1 `
     -CodexHome "/Users/yourname/.codex" `
     -IncludeInternal
 ```
@@ -648,7 +674,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 -CodexHome "/Users/yourname/.codex" -IncludeInternal
+./Get-CodexSessions-v1.7.ps1 -CodexHome "/Users/yourname/.codex" -IncludeInternal
 ```
 
 ---
@@ -660,7 +686,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Export-Csv `
         -Path ".\CodexSessions.csv" `
         -NoTypeInformation `
@@ -670,7 +696,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Export-Csv -Path ".\CodexSessions.csv" -NoTypeInformation -Encoding UTF8
+.\Get-CodexSessions-v1.7.ps1 | Export-Csv -Path ".\CodexSessions.csv" -NoTypeInformation -Encoding UTF8
 ```
 
 ### macOS
@@ -678,7 +704,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 |
+./Get-CodexSessions-v1.7.ps1 |
     Export-Csv `
         -Path "./CodexSessions.csv" `
         -NoTypeInformation `
@@ -688,7 +714,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-./Get-CodexSessions-v1.6.ps1 | Export-Csv -Path "./CodexSessions.csv" -NoTypeInformation -Encoding UTF8
+./Get-CodexSessions-v1.7.ps1 | Export-Csv -Path "./CodexSessions.csv" -NoTypeInformation -Encoding UTF8
 ```
 
 只导出指定字段：
@@ -696,7 +722,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Select-Object `
         Title,
         LastActive,
@@ -717,7 +743,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Select-Object Title, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project, SessionId, JsonlPath | Export-Csv ".\CodexSessions.csv" -NoTypeInformation -Encoding UTF8
+.\Get-CodexSessions-v1.7.ps1 | Select-Object Title, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project, SessionId, JsonlPath | Export-Csv ".\CodexSessions.csv" -NoTypeInformation -Encoding UTF8
 ```
 
 导出 CSV 只会新建 CSV 文件，不会修改 Codex 原始数据。
@@ -729,7 +755,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProjectArchive*"
     } |
@@ -739,7 +765,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object Title, JsonlPath
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object Title, JsonlPath
 ```
 
 只取得路径字符串：
@@ -747,7 +773,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProjectArchive*"
     } |
@@ -757,7 +783,7 @@ JsonlPath
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -ExpandProperty JsonlPath
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -ExpandProperty JsonlPath
 ```
 
 ---
@@ -769,7 +795,7 @@ JsonlPath
 **多行写法**
 
 ```powershell
-$session = .\Get-CodexSessions-v1.6.ps1 |
+$session = .\Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProjectArchive*"
     } |
@@ -781,7 +807,7 @@ explorer.exe (Split-Path $session.JsonlPath)
 **单行写法**
 
 ```powershell
-$session = .\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -First 1; explorer.exe (Split-Path $session.JsonlPath)
+$session = .\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -First 1; explorer.exe (Split-Path $session.JsonlPath)
 ```
 
 ### macOS
@@ -789,7 +815,7 @@ $session = .\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*Sample
 **多行写法**
 
 ```powershell
-$session = ./Get-CodexSessions-v1.6.ps1 |
+$session = ./Get-CodexSessions-v1.7.ps1 |
     Where-Object {
         $_.Title -like "*SampleProjectArchive*"
     } |
@@ -801,7 +827,7 @@ open (Split-Path $session.JsonlPath)
 **单行写法**
 
 ```powershell
-$session = ./Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -First 1; open (Split-Path $session.JsonlPath)
+$session = ./Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProjectArchive*" } | Select-Object -First 1; open (Split-Path $session.JsonlPath)
 ```
 
 ---
@@ -810,7 +836,7 @@ $session = ./Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*Sample
 
 | Windows | macOS |
 |---|---|
-| `.\Get-CodexSessions-v1.6.ps1` | `./Get-CodexSessions-v1.6.ps1` |
+| `.\Get-CodexSessions-v1.7.ps1` | `./Get-CodexSessions-v1.7.ps1` |
 | `$HOME` → `C:\Users\User` | `$HOME` → `/Users/User` |
 | `sqlite3.exe` / `sqlite3` | `sqlite3` |
 | `explorer.exe` | `open` |
@@ -826,14 +852,14 @@ $session = ./Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*Sample
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 |
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ### 按标题搜索
@@ -841,15 +867,15 @@ $session = ./Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*Sample
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object { $_.Title -like "*SampleProject*" } |
-    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+    Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-Table DisplayTitle, LastActive, Created, FirstModel, FirstEffort, LastModel, LastEffort, LastSpeedMode, Project -AutoSize
 ```
 
 ### 查看某个会话全部信息
@@ -857,7 +883,7 @@ $session = ./Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*Sample
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 |
+.\Get-CodexSessions-v1.7.ps1 |
     Where-Object { $_.Title -like "*SampleProject*" } |
     Format-List *
 ```
@@ -865,7 +891,7 @@ $session = ./Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*Sample
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-List *
+.\Get-CodexSessions-v1.7.ps1 | Where-Object { $_.Title -like "*SampleProject*" } | Format-List *
 ```
 
 ### 查看 Codex 内部线程
@@ -873,7 +899,7 @@ $session = ./Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*Sample
 **多行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal |
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal |
     Where-Object { $_.IsInternal } |
     Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
 ```
@@ -881,7 +907,7 @@ $session = ./Get-CodexSessions-v1.6.ps1 | Where-Object { $_.Title -like "*Sample
 **单行写法**
 
 ```powershell
-.\Get-CodexSessions-v1.6.ps1 -IncludeInternal | Where-Object { $_.IsInternal } | Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
+.\Get-CodexSessions-v1.7.ps1 -IncludeInternal | Where-Object { $_.IsInternal } | Format-Table DisplayTitle, LastActive, FirstModel, InternalReason, Project -AutoSize
 ```
 
 macOS 下把命令开头的 `.\` 改成 `./` 即可，其余 PowerShell 管道与筛选语法相同。
