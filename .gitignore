@@ -7,3 +7,6 @@ rollout-*.jsonl
 .DS_Store
 Thumbs.db
 *.tmp
+
+AGENTS.md
+AGENTS.override.md
